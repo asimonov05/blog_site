@@ -1,7 +1,144 @@
-.block__paragraph {
-  padding: 10;
+@charset "UTF-8";
+/*Обнуление*/
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
 }
 
-.text {
-  color: red;
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+:focus, :active {
+  outline: none;
+}
+
+a:focus, a:active {
+  outline: none;
+}
+
+nav, footer, header, aside {
+  display: block;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  line-height: 1;
+  font-size: 14px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+input, button, textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+a, a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*--------------------*/
+.navbar {
+  width: 100%;
+  height: 64px;
+  border: 1px solid #4c4c4c;
+  background-color: #303030;
+  position: absolute;
+}
+
+.navbar__Main {
+  border: 1px solid #484848;
+  height: 63px;
+  width: 180px;
+  text-align: center;
+  padding-top: 10px;
+  float: left;
+}
+
+.navbar__Main__Text {
+  color: #ffffff;
+  font-family: "Noto Sans";
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.navbar__Themes {
+  text-decoration: none;
+  border: 1px solid #484848;
+  height: 63px;
+  width: 140px;
+  text-align: center;
+  padding-top: 12px;
+  float: left;
+}
+
+.navbar__Themes__Text {
+  color: #ffffff;
+  font-family: "Noto Sans";
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.navbar__Subscribes {
+  text-decoration: none;
+  border: 1px solid #484848;
+  height: 63px;
+  width: 220px;
+  text-align: center;
+  padding-top: 12px;
+  float: left;
+}
+
+.navbar__Subscribes__Text {
+  color: #ffffff;
+  font-family: "Noto Sans";
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.navbar__Profile {
+  background: none;
+  position: relative;
+  top: -64;
+  right: auto;
+}
+
+body {
+  background-color: #262626;
 }

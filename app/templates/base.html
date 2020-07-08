@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/templates/css/styles.css">
+    <title>{% block title %}{% endblock %} | Blog</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar__Main">
+            <a href="{{ url_for('index') }}" class="navbar__Main__Text">Главная</a>
+        </div>
+        <div class="navbar__Themes">
+            <a href="{{ url_for('index') }}" class="navbar__Themes__Text">Темы</a>
+        </div>
+        <div class="navbar__Subscribes">
+            <a href="{{ url_for('index') }}" class="navbar__Subscribes__Text">Подписки</a>
+        </div>
+        <div class="navbar__Profile">
+            <a href="{{ url_for('index') }}"><img src="/Sourse/Images/Search_icon.jpg" alt="" class="navbar__Profile__Img"></a>
+        </div>
+        <div class="navbar__Search">
+            <a href="{{ url_for('index') }}"><img src="/Sourse/Images/Значок_аккаунта.jpg" alt="" class="navbar__Search__Img"></a>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>
