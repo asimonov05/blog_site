@@ -1,10 +1,14 @@
 from app import app
 from flask import render_template
 
+posts = [
+	"«Ростелеком» заподозрил школьников в DDoS-атаках на учебные ресурс"] * 21
+
 @app.route('/')
 @app.route('/index')
 def index():
-	return render_template('index.html')
+	global posts
+	return render_template('index.html', posts=posts)
 
 @app.route('/themes')
 def themes():

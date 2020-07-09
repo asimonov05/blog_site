@@ -2,4 +2,15 @@
 
 {% block title %}Homepage{% endblock %}
 
-{% block content %}{% endblock %}
+{% block content %}
+<div class="blogread">
+    <div class="blogread__columns">
+        {% for post in posts %}
+            <div class="blogread__column">
+                <div class="column__title">{{ post }}</div>
+                <div class="column__text"></div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
