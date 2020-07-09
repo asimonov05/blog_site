@@ -21,16 +21,18 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
 .navbar {
     width: 100%;
     height: 64px;
-    border: 1px solid #4c4c4c;
+    border-bottom: 1px solid #4c4c4c;
     background-color: #303030;
-    position: absolute;
+    position: fixed;
+    display: flex;
+    align-content: center;
     &__Main {
         border: 1px solid #484848;
+        border-bottom: none;
         height: 63px;
         width: 180px;
         text-align: center;
         padding-top: 10px;
-        float: left;
         &__Text{
             color: #ffffff;
             font-family: "Noto Sans";
@@ -42,11 +44,11 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
     &__Themes {
         text-decoration: none;
         border: 1px solid #484848;
+        border-bottom: none;
         height: 63px;
         width: 140px;
         text-align: center;
         padding-top: 12px;
-        float: left;
         &__Text{
             color: #ffffff;
             font-family: "Noto Sans";
@@ -58,12 +60,11 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
     &__Subscribes {
         text-decoration: none;
         border: 1px solid #484848;
+        border-bottom: none;
         height: 63px;
         width: 220px;
         text-align: center;
         padding-top: 12px;
-        float: left;
-        //margin-right: 50px;
         &__Text{
             color: #ffffff;
             font-family: "Noto Sans";
@@ -72,14 +73,17 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
         }
     }
 
+    &__emptybox {
+        flex: 1 1 auto;
+        border: none;
+    }
+
     &__Profile {
-        background: none;
-        position: relative;
-        top: -64;
-        right: auto;
+        padding: 6px 14px 7px 24px;
     }
 
     &__Search {
+        padding: 19px 0px;
     }
 }
 body{
