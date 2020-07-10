@@ -6,10 +6,12 @@
 <div class="blogread">
     <div class="blogread__columns">
         {% for post in posts %}
-            <div class="blogread__column">
-                <div class="column__title">{{ post }}</div>
-                <div class="column__text"></div>
+        <div class="blogread__column">
+            <div class="column__content">
+                <div class="content__title">{{ post }}</div>
+                <div class="content__text"></div>
             </div>
+        </div>
         {% endfor %}
     </div>
 </div>
