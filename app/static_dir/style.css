@@ -85,6 +85,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   -ms-flex-line-pack: center;
       align-content: center;
+  margin: 0px 0px 60px 0px;
   z-index: 1;
 }
 
@@ -153,22 +154,31 @@ h1, h2, h3, h4, h5, h6 {
   padding: 19px 0px;
 }
 
+@media (max-width: 992px) {
+  .navbar__Main {
+    font-size: 25px;
+  }
+  .navbar__Themes {
+    font-size: 23px;
+  }
+  .navbar__Subscribes {
+    font-size: 23px;
+  }
+}
+
 body {
   background-color: #262626;
 }
 
 .blogread {
-  margin: 20px auto;
-  position: absolute;
-  top: 114px;
-  left: 234px;
+  margin: 0px auto;
+  width: 80%;
 }
 
 .blogread__columns {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 1600px;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   margin: 0px -10px;

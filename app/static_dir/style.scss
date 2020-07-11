@@ -26,6 +26,7 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
     position: fixed;
     display: flex;
     align-content: center;
+    margin: 0px 0px 60px 0px;
     &__Main {
         border: 1px solid #484848;
         border-bottom: none;
@@ -87,20 +88,29 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
     }
     z-index: 1;
 }
+@media(max-width: 992px){
+    .navbar{
+        &__Main{
+            font-size: 25px;
+        }
+        &__Themes{
+            font-size: 23px;
+        }
+        &__Subscribes{
+            font-size: 23px;
+        }
+    }
+}
 body{
     background-color: #262626;
 }
 .blogread {
-    margin: 20px auto;
-    position: absolute;
-    top: 114px;
-    left: 234px;
+    margin: 0px auto;
+    width: 80%;
     &__columns {
         display: flex;
-        width: 1600px;
         flex-wrap: wrap;
         margin: 0px -10px;
-        //justify-content: space-between;
     }
 
     &__column {
