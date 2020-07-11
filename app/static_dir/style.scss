@@ -26,7 +26,8 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
     position: fixed;
     display: flex;
     align-content: center;
-    margin: 0px 0px 60px 0px;
+    top: 0;
+    left: 0;
     &__Main {
         border: 1px solid #484848;
         border-bottom: none;
@@ -88,25 +89,16 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
     }
     z-index: 1;
 }
-@media(max-width: 992px){
-    .navbar{
-        &__Main{
-            font-size: 25px;
-        }
-        &__Themes{
-            font-size: 23px;
-        }
-        &__Subscribes{
-            font-size: 23px;
-        }
-    }
-}
+
 body{
     background-color: #262626;
+    position: relative;
+    display: flex;
+    justify-content: center;
 }
 .blogread {
-    margin: 0px auto;
-    width: 80%;
+    width: 76%;
+    margin: 114px auto;
     &__columns {
         display: flex;
         flex-wrap: wrap;
@@ -138,3 +130,4 @@ body{
         height: 325px;
     }
 }
+@media(max-width: )
