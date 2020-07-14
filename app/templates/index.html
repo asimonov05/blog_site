@@ -8,8 +8,9 @@
         {% for post in posts %}
         <div class="blogread__column">
             <div class="column__content">
-                <div class="content__title">{{ post }}</div>
-                <div class="content__text"></div>
+                <div class="content__title"><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></div>
+                <div class="content__text"><a href="{{ url_for('post', post_id=post.id) }}">{{ post.body }}</a></div>
+                <div class="content__author">{{ post.author.username }}</div>
             </div>
         </div>
         {% endfor %}

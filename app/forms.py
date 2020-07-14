@@ -28,7 +28,7 @@ class RegistrationForm(FlaskForm):
 			raise ValidationError('Пожалуйста, выберите другой email')
 
 class PostForm(FlaskForm):
-	post_title = TextAreaField('Введите название', validators=[
+	post_title = StringField('Введите название', validators=[
 		DataRequired(), Length(min=1, max=64)])
 	post = TextAreaField('Введите текст', validators=[
         DataRequired(), Length(min=1, max=1000)])

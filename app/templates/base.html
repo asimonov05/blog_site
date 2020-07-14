@@ -28,10 +28,19 @@
                     class="navbar__Search__Img"></a>
         </div>
         <div class="navbar__Profile">
-            <a href="{{ url_for('login') }}"><img src="{{ url_for('static',filename='icon_base.png') }}" alt=""
-                    class="navbar__Profile__Img"></a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}"><img src="{{ url_for('static',filename='icon_base.png') }}" alt=""
+                        class="navbar__Profile__Img"></a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Вход</a>
+            {% endif %}
         </div>
     </div>
+    {% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    {% endwith %}
     {% block content %}
     {% endblock %}
 </body>

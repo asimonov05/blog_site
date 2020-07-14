@@ -17,14 +17,12 @@ def before_request():
 		db.session.commit()
 
 
-posts = [
-	"«Ростелеком» заподозрил школьников в DDoS-атаках на учебные ресурс"] * 21
-
 @app.route('/')
 @app.route('/index')
 def index():
-	global posts
-	return render_template('index.html', posts=posts)
+	posts = Post.query.order_by(Post.timestamp.desc()).all()
+	print(posts)
+	return render_template('index.html', posts=posts, current_user=current_user)
 
 @app.route('/themes')
 def themes():
@@ -83,7 +81,14 @@ def new_post():
 		db.session.add(post)
 		db.session.commit()
 		return redirect(url_for('index'))
-	return render_template("index.html", form=form)
+	return render_template("new_post.html", form=form)
+
+
+
+@app.route('/post/<post_id>')
+def post(post_id):
+	post = Post.query.filter_by(id=post_id).first_or_404()
+	return render_template('post.html', post=post)
 
 @app.errorhandler(404)
 def not_found_error(error):

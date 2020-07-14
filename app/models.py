@@ -34,3 +34,8 @@ class Post(db.Model):
 
     def __repr__(self):
         return self.body
+
+    def del_post(self, id):
+        delete = self.query.filter_by(id=id).first() 
+        session.delete(delete)
+        session.commit()
