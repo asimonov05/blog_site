@@ -33,3 +33,6 @@ class PostForm(FlaskForm):
 	post = TextAreaField('Введите текст', validators=[
         DataRequired(), Length(min=1, max=1000)])
 	submit = SubmitField('Опубликовать')
+
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')

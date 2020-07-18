@@ -5,7 +5,7 @@ from flask_login import current_user, login_user
 from app.models import User
 from flask_login import logout_user, login_required
 from werkzeug.urls import url_parse
-from app.forms import RegistrationForm
+from app.forms import RegistrationForm, EmptyForm
 from datetime import datetime
 from app.models import Post
 from app.forms import PostForm
@@ -88,7 +88,22 @@ def new_post():
 @app.route('/post/<post_id>')
 def post(post_id):
 	post = Post.query.filter_by(id=post_id).first_or_404()
-	return render_template('post.html', post=post)
+	form = EmptyForm()
+	if current_user.is_authenticated:
+		user = current_user.username
+	else:
+		user = ""
+	return render_template('post.html', post=post, form=form, user=user)
+
+@app.route('/post/delete/<id>', methods=['GET', 'POST'])
+def delete_post(id):
+	post_auth = db.session.query(Post.id, User.username).join(Post).first_or_404()
+	if post_auth.username == current_user.username:
+		post = Post.query.filter_by(id=id).first()
+		db.session.delete(post)
+		db.session.commit()
+		flash('Ваш пост успешно удален!')
+	return redirect(url_for('index'))
 
 @app.errorhandler(404)
 def not_found_error(error):
