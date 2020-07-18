@@ -84,7 +84,6 @@ def new_post():
 	return render_template("new_post.html", form=form)
 
 
-
 @app.route('/post/<post_id>')
 def post(post_id):
 	post = Post.query.filter_by(id=post_id).first_or_404()
@@ -97,7 +96,8 @@ def post(post_id):
 
 @app.route('/post/delete/<id>', methods=['GET', 'POST'])
 def delete_post(id):
-	post_auth = db.session.query(Post.id, User.username).join(Post).first_or_404()
+	post_auth = db.session.query(Post.id, User.username).join(Post).filter_by(id=id).first_or_404()
+	print(post_auth)
 	if post_auth.username == current_user.username:
 		post = Post.query.filter_by(id=id).first()
 		db.session.delete(post)
@@ -105,10 +105,9 @@ def delete_post(id):
 		flash('Ваш пост успешно удален!')
 	return redirect(url_for('index'))
 
-@app.errorhandler(404)
-def not_found_error(error):
-    return render_template('404.html'), 404
 
-@app.errorhandler(500)
-def not_found_error(error):
-    return render_template('500.html'), 500
+@app.route('/user/<username>')
+def user(username):
+	post_user = Post.query.join(User).filter_by(username=username).order_by(Post.timestamp.desc()).all()
+	user = db.session.query(User.username, User.last_seen).filter_by(username=username).first()
+	return render_template('user.html', user=user, post=post_user)
