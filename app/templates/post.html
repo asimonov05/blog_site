@@ -6,6 +6,7 @@
     <div class="content__title">{{ post.title }}</div>
     <div class="content__text">{{ post.body }}</div>
     <div class="content__author"><a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a></div>
+    <div class="content__views"><a>Просмотры: {{ post.views }}</a></div>
     {% if user == post.author.username %}
      <p>
         <form action="{{ url_for('delete_post', id=post.id) }}" method="post">

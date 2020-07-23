@@ -38,7 +38,13 @@
     </div>
     {% with messages = get_flashed_messages() %}
     {% for message in messages %}
-      <li>{{ message }}</li>
+        {% if message == 'confirm_email' %}
+            <li>Подтвердите почту</li>
+            <li>Усли вы указали не правильную почту, то перейдите <a href="{{ url_for('change_email') }}">по ссылке</a></li>
+            <li>Если вам не пришло письмо, то нажмите на <a href="{{ url_for('send_email') }}">ссылку</a></li>
+        {% else %}
+            <li>{{ message }}</li>
+        {% endif %}
     {% endfor %}
     {% endwith %}
     {% block content %}

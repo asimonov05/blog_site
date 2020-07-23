@@ -5,16 +5,16 @@ from app.models import User
 import email_validator
 
 class LoginForm(FlaskForm):
-    username = StringField('Логин', validators=[DataRequired()])
-    password = PasswordField('Пароль', validators=[DataRequired()])
+    username = StringField('Логин', validators=[DataRequired(message="Это поле не может быть пустым")])
+    password = PasswordField('Пароль', validators=[DataRequired(message="Это поле не может быть пустым")])
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Вход')
 
 class RegistrationForm(FlaskForm):
-	username = StringField('Логин', validators=[DataRequired()])
-	email = StringField('Email', validators=[DataRequired(), Email()])
-	password = PasswordField('Пароль', validators=[DataRequired()])
-	password2 = PasswordField('Повтор пароля', validators=[DataRequired(), EqualTo('password')])
+	username = StringField('Логин', validators=[DataRequired(message="Это поле не может быть пустым")])
+	email = StringField('Email', validators=[DataRequired(message="Это поле не может быть пустым"), Email(message="Неверный формат email")])
+	password = PasswordField('Пароль', validators=[DataRequired(message="Это поле не может быть пустым")])
+	password2 = PasswordField('Повтор пароля', validators=[DataRequired(message="Это поле не может быть пустым"), EqualTo('password')])
 	submit = SubmitField('Зарегистрироваться')
 
 	def validate_username(self, username):
@@ -38,10 +38,10 @@ class EmptyForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class ResetPasswordRequestForm(FlaskForm):
-	email = StringField('Email', validators=[DataRequired(), Email()])
+	email = StringField('Email', validators=[DataRequired(message="Это поле не может быть пустым"), Email(message="Неверный формат email")])
 	submit = SubmitField('Сброс пароля')
 
 class ResetPasswordForm(FlaskForm):
-	password = PasswordField('Пароль', validators=[DataRequired()])
-	password2 = PasswordField('Повтор пароля', validators=[DataRequired(), EqualTo('password')])
+	password = PasswordField('Пароль', validators=[DataRequired(message="Это поле не может быть пустым")])
+	password2 = PasswordField('Повтор пароля', validators=[DataRequired(message="Это поле не может быть пустым"), EqualTo('password', message="Пароли не совпадают")])
 	submit = SubmitField('Изменить пароль')

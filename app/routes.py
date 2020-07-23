@@ -1,11 +1,11 @@
 from app import app, db
-from flask import render_template, redirect, flash, url_for, request
+from flask import render_template, redirect, flash, url_for, request, make_response
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
 from app.models import Post, User
 from app.forms import PostForm, ResetPasswordRequestForm, RegistrationForm, EmptyForm, LoginForm, ResetPasswordForm
-from app.email import send_email, send_password_reset_email
+from app.email import send_email, send_password_reset_email, send_confirm_email
 
 @app.before_request
 def before_request():
@@ -31,24 +31,29 @@ def subs():
 	return render_template('subs.html')
 
 @app.route('/login', methods=['GET', 'POST'])
-def login():
+def login(email=""):
 	if current_user.is_authenticated:
 		return redirect(url_for('index'))
 	form = LoginForm()
 	if form.validate_on_submit():
 		user = User.query.filter_by(username=form.username.data).first()
+		print(user.confirm)
 		if not(user is None):
 			if user.check_password(form.password.data):
-				login_user(user, remember=form.remember_me.data)
-				next_page = request.args.get('next')
-				if not next_page or url_parse(next_page).netloc != '':
-					next_page = url_for('index')
-				return redirect(next_page)
+				if user.confirm:
+					login_user(user, remember=form.remember_me.data)
+					next_page = request.args.get('next')
+					if not next_page or url_parse(next_page).netloc != '':
+						next_page = url_for('index')
+					return redirect(next_page)
+				else:
+					flash('confirm_email')
 			else:
 				flash('Неверный пароль')
 		else:
 			flash('Неверный логин')
-	return render_template('login.html', title='Sign In', form=form)
+	return render_template('login.html', title='Sign In', form=form, email=email)
+
 
 @app.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
@@ -96,8 +101,29 @@ def register():
 		user.set_password(form.password.data)
 		db.session.add(user)
 		db.session.commit()
-		return redirect(url_for('login'))
+		send_confirm_email(user)
+
+
+		ans = make_response("", 302)
+		ans.headers['location'] = url_for('login')
+		ans.set_cookie("Reg", 'True', 60*60*24*30)
+		ans.set_cookie("Email", form.email.data, 60*60*24)
+
+		flash(f'Вам на почту - {form.email.data} отправлено письмо с подтверждением аккаунта')
+		return ans
 	return render_template('register.html', title='Register', form=form)
+
+@app.route('/confirm_email/<token>')
+def confirm_email(token):
+	if current_user.is_authenticated:
+		return redirect(url_for('index'))
+	user = User.verify_reset_password_token(token)
+	if not user:
+		return redirect(url_for('index'))
+	user.confirm = True
+	db.session.commit()
+	flash('Аккаунт успешно зарегистрирован!')
+	return redirect(url_for('login'))
 
 @app.route('/new_post', methods=['GET', 'POST'])
 @login_required
@@ -114,6 +140,10 @@ def new_post():
 @app.route('/post/<post_id>')
 def post(post_id):
 	post = Post.query.filter_by(id=post_id).first_or_404()
+	print(post.views)
+	post.views = post.views + 1
+	db.session.add(post)
+	db.session.commit()
 	form = EmptyForm()
 	if current_user.is_authenticated:
 		user = current_user.username
@@ -138,3 +168,17 @@ def user(username):
 	post_user = Post.query.join(User).filter_by(username=username).order_by(Post.timestamp.desc()).all()
 	user = db.session.query(User.username, User.last_seen).filter_by(username=username).first()
 	return render_template('user.html', user=user, post=post_user)
+
+@app.route('/send_email')
+def send_email():
+	if current_user.is_authenticated:
+		return redirect('index')
+	email = request.cookies.get('Email')
+	user = User.query.filter_by(email=email).first()
+	send_confirm_email(user)
+	flash(f'Вам на почту - {user.email} отправлено письмо с подтверждением аккаунта')
+	return redirect('login')
+
+@app.route('/change_email')
+def change_email():
+	pass

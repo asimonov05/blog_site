@@ -9,6 +9,7 @@ app = Flask(__name__, static_folder="static_dir")
 app.config.from_object(Config)
 login = LoginManager(app)
 login.login_view = 'login'
+login.login_message = 'Войдите в аккаунт, чтобы получить доступ к этой странице'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 mail = Mail(app)
