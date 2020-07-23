@@ -149,7 +149,7 @@ def post(post_id):
 		user = current_user.username
 	else:
 		user = ""
-	return render_template('post.html', post=post, form=form, user=user)
+	return render_template('post.html', post=post, form=form, user=user, likes=len(post.likes_users))
 
 @app.route('/post/delete/<id>', methods=['GET', 'POST'])
 def delete_post(id):
@@ -182,3 +182,21 @@ def send_email():
 @app.route('/change_email')
 def change_email():
 	pass
+
+
+@app.route('/post/<post_id>/like', methods=['GET', 'POST'])
+@login_required
+def like(post_id):
+	post = Post.query.filter_by(id=post_id).first()
+	if post:
+		if current_user in post.likes_users:
+			post.likes_users.remove(current_user)
+		else:
+			post.likes_users.append(current_user)
+		db.session.commit()
+		return redirect(url_for('post', post_id=post_id))
+	else:
+		abord(404)
+
+
+
